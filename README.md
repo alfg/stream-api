@@ -1,16 +1,4 @@
-## golang-restful-starter
-
-**golang-restful-starter** is a minimal project starter providing a RESTful API for common project structure patterns.
-
-#### Features
-* Routing
-* Service Layer, Data Models
-* Data Layer, backed by SQLite3 (for now)
-* JWT Authentication
-* Configuration Service
-* Model Validation
-* Docker support
-
+## stream-api
 
 #### Tech Stack
 * Go1.5.1
@@ -38,9 +26,9 @@ gvm use go1.5.1
 * Setup GOPATH project structure
 ```
 cd ~/Source/Go
-git clone golang-restful-starter src
+git clone stream-api src
 gvm pkgset use --local
-go build golang-restful-starter && ./golang-restful-starter
+go build stream-api && ./stream-api
 ```
 ```
 Running with 8 CPUs
@@ -50,7 +38,7 @@ Starting server on port 4000
 * Setup auto-reload (optional)
 ```
 go get github.com/codegangsta/gin
-cd src/golang-restful-starter
+cd src/stream-api
 gin -a 4000 -p 4001
 ```
 
@@ -65,7 +53,7 @@ Create your Docker Machine, or use the default env.
 `eval "$(docker-machine env default)"`
 
 ```
-git clone golang-restful-starter
+git clone stream-api
 docker build -t golang-app .
 docker run -p 8080:4000 -d golang-app
 ```
