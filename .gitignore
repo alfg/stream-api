@@ -1,0 +1,4 @@
+.gvm_local
+gin-bin
+test.db
+.DS_Store

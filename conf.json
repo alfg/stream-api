@@ -1,0 +1,13 @@
+{
+    "host": "0.0.0.0",
+    "port": "4000",
+    "jwtKey": "supersecret",
+    "mssql": {
+      "server": "",
+      "port": "",
+      "user": "",
+      "password": "",
+      "database": ""
+    }
+
+}
