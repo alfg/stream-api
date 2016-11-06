@@ -1,6 +1,7 @@
 package data
 
 import (
+	"crypto/rand"
 	"fmt"
 	"stream-api/models"
 )
@@ -37,7 +38,7 @@ func GetStreams() *[]models.Stream {
 
 // CreateStream creates a stream.
 func CreateStream(stream models.Stream) *models.Stream {
-	const query = "INSERT INTO stream (stream_name, type, description, url, key, private) VALUES (:stream_name, :type, :description, :url, :key, :private)"
+	const query = "INSERT INTO stream (stream_name, type, description, url, secret_key, public_key, private) VALUES (:stream_name, :type, :description, :url, :secret_key, :public_key :private)"
 
 	db, _ := ConnectDB()
 	tx := db.MustBegin()
@@ -50,7 +51,9 @@ func CreateStream(stream models.Stream) *models.Stream {
 	fmt.Println("transaction done")
 
 	lastID, _ := result.LastInsertId()
+	key := generateKey(10)
 	stream.ID = lastID
+	stream.SecretKey = key
 
 	return &stream
 }
@@ -62,7 +65,8 @@ func UpdateStreamByID(id int, stream models.Stream) *models.Stream {
 		type = :type,
 		description = :description
 		url = :url
-		key = :key
+		secret_key = :secret_key
+		public_key = :public_key
 		private = :private
 		WHERE id = :id`
 
@@ -86,4 +90,13 @@ func DeleteStreamByID(id int) error {
 	_, err := tx.Exec(query, 4)
 	tx.Commit()
 	return err
+}
+
+func generateKey(n int) string {
+	b := make([]byte, n)
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
+	s := fmt.Sprintf("%x", b)
+	return string(s)
 }

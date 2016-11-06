@@ -1,4 +1,4 @@
-package services
+package controllers
 
 import (
 	"fmt"
@@ -45,7 +45,6 @@ func CreateStream(c echo.Context) error {
 	_type := c.FormValue("type")
 	description := c.FormValue("email")
 	url := c.FormValue("url")
-	key := c.FormValue("key")
 	private, _ := strconv.ParseBool(c.FormValue("private"))
 
 	u := models.Stream{
@@ -53,7 +52,6 @@ func CreateStream(c echo.Context) error {
 		Type:        _type,
 		Description: description,
 		URL:         url,
-		Key:         key,
 		Private:     private,
 	}
 
@@ -92,7 +90,6 @@ func UpdateStream(c echo.Context) error {
 	_type := c.FormValue("type")
 	description := c.FormValue("email")
 	url := c.FormValue("url")
-	key := c.FormValue("key")
 	private, _ := strconv.ParseBool(c.FormValue("private"))
 
 	if streamName != "" {
@@ -109,10 +106,6 @@ func UpdateStream(c echo.Context) error {
 
 	if url != "" {
 		stream.URL = url
-	}
-
-	if key != "" {
-		stream.Key = key
 	}
 
 	if private {

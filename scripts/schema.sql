@@ -11,6 +11,7 @@ CREATE TABLE `stream` (
 	`type` TEXT,
 	`description`	TEXT,
   `url` TEXT UNIQUE,
-  `key` TEXT,
+  `secret_key` TEXT UNIQUE,
+  `public_key` TEXT UNIQUE,
   `private` BOOLEAN
 );

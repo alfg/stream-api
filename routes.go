@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	"stream-api/services"
+	"stream-api/controllers"
 
 	"github.com/labstack/echo"
 )
@@ -11,20 +11,22 @@ func registerRoutes(e *echo.Echo) {
 	// config := ConfigurationSetup()
 
 	e.Get("/", index)
+	e.Get("/stream/auth", auth)
 
 	// User routes
-	e.Get("/users", services.GetUsers)
-	e.Get("/users/:id", services.GetUser)
-	e.Post("/users", services.CreateUser)
-	e.Put("/users/:id", services.UpdateUser)
-	e.Delete("/users/:id", services.DeleteUser)
+	v1 := e.Group("/v1")
+	v1.Get("/users", controllers.GetUsers)
+	v1.Get("/users/:id", controllers.GetUser)
+	v1.Post("/users", controllers.CreateUser)
+	v1.Put("/users/:id", controllers.UpdateUser)
+	v1.Delete("/users/:id", controllers.DeleteUser)
 
 	// Stream routes
-	e.Get("/stream", services.GetStreams)
-	e.Get("/stream/:id", services.GetStream)
-	e.Post("/stream", services.CreateStream)
-	e.Put("/stream/:id", services.UpdateStream)
-	e.Delete("/stream/:id", services.DeleteStream)
+	v1.Get("/stream", controllers.GetStreams)
+	v1.Get("/stream/:id", controllers.GetStream)
+	v1.Post("/stream", controllers.CreateStream)
+	v1.Put("/stream/:id", controllers.UpdateStream)
+	v1.Delete("/stream/:id", controllers.DeleteStream)
 
 	// Restricted group
 	// Temporary: Run scripts/token.go to generate auth token
@@ -36,4 +38,12 @@ func registerRoutes(e *echo.Echo) {
 // Handlers
 func index(c echo.Context) error {
 	return c.String(http.StatusOK, "Hello World!")
+}
+
+func auth(c echo.Context) error {
+	key := c.QueryParam("key")
+	if key == "testkey" {
+		return c.String(http.StatusOK, "OK")
+	}
+	return c.String(http.StatusForbidden, "Forbidden")
 }
