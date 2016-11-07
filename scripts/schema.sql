@@ -7,11 +7,10 @@ CREATE TABLE `user` (
 
 CREATE TABLE `stream` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	`stream_name` TEXT,
+	`title` TEXT,
 	`type` TEXT,
 	`description`	TEXT,
-  `url` TEXT UNIQUE,
-  `secret_key` TEXT UNIQUE,
-  `public_key` TEXT UNIQUE,
-  `private` BOOLEAN
+  `private` BOOLEAN,
+  `stream_name` TEXT UNIQUE,
+  `stream_key` TEXT UNIQUE
 );

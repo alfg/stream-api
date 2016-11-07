@@ -5,6 +5,11 @@ type DoesNotExist struct {
 	Message string `json:"message"`
 }
 
+type AlreadyExists struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 type ValidationError struct {
 	ValidationErrors map[string]string `json:"validation_errors"`
 }

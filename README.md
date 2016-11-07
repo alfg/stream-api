@@ -11,13 +11,18 @@
 
 ### Go Setup (for local development)
 * [Install Go](https://golang.org/dl/)
-* [Install GVM](https://github.com/moovweb/gvm)
-* Setup GVM/Go environment
 ```
-gvm install go1.4.3
-gvm use go1.4.3
-gvm install go1.5.1
-gvm use go1.5.1
+brew install go
+export GOPATH=~/Source/Go
+export PATH=$PATH:$GOPATH/bin
+```
+
+## GoDep
+```
+go get github.com/tools/godep
+cd ~/Source/Go/src/stream-api
+godep restore
+godep save ./...
 ```
 
 
@@ -27,9 +32,11 @@ gvm use go1.5.1
 ```
 cd ~/Source/Go
 git clone stream-api src
-gvm pkgset use --local
+cd src/stream-api
+go install ./..
 go build stream-api && ./stream-api
 ```
+
 ```
 Running with 8 CPUs
 Starting server on port 4000
@@ -44,6 +51,9 @@ gin -a 4000 -p 4001
 
 ### Database Setup
 * Create DB (sqlite3)
+```
+sqlite3 test.db < scripts/schema.sql
+```
 
 
 ### Docker Setup

@@ -2,3 +2,6 @@
 gin-bin
 test.db
 .DS_Store
+stream-api
+*.db
+vendor/

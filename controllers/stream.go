@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crypto/rand"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -40,24 +41,37 @@ func GetStreams(c echo.Context) error {
 // CreateStream Creates a stream
 func CreateStream(c echo.Context) error {
 
-	// Set form data
 	streamName := c.FormValue("stream_name")
+
+	// Check if stream exists.
+	if data.StreamExistsByName(streamName) {
+		resp := models.AlreadyExists{
+			Code:    409,
+			Message: "Stream name is taken.",
+		}
+		return c.JSON(http.StatusConflict, resp)
+	}
+
+	// Set form data
+	title := c.FormValue("title")
 	_type := c.FormValue("type")
-	description := c.FormValue("email")
-	url := c.FormValue("url")
+	description := c.FormValue("description")
 	private, _ := strconv.ParseBool(c.FormValue("private"))
 
-	u := models.Stream{
-		StreamName:  streamName,
+	streamKey := generateKey(10)
+
+	s := models.Stream{
+		Title:       title,
 		Type:        _type,
 		Description: description,
-		URL:         url,
 		Private:     private,
+		StreamName:  streamName,
+		StreamKey:   streamKey,
 	}
 
 	fmt.Print("validating stream")
 	// Validate Stream
-	result, err := valid.ValidateStruct(u)
+	result, err := valid.ValidateStruct(s)
 	if err != nil {
 		fmt.Println(err)
 		ve := models.ValidationError{
@@ -68,7 +82,7 @@ func CreateStream(c echo.Context) error {
 	fmt.Println(result)
 
 	// Create record
-	stream := data.CreateStream(u)
+	stream := data.CreateStream(s)
 	return c.JSON(http.StatusCreated, stream)
 }
 
@@ -86,14 +100,13 @@ func UpdateStream(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, resp)
 	}
 
-	streamName := c.FormValue("stream_name")
+	title := c.FormValue("title")
 	_type := c.FormValue("type")
 	description := c.FormValue("email")
-	url := c.FormValue("url")
 	private, _ := strconv.ParseBool(c.FormValue("private"))
 
-	if streamName != "" {
-		stream.StreamName = streamName
+	if title != "" {
+		stream.Title = title
 	}
 
 	if _type != "" {
@@ -102,10 +115,6 @@ func UpdateStream(c echo.Context) error {
 
 	if description != "" {
 		stream.Description = description
-	}
-
-	if url != "" {
-		stream.URL = url
 	}
 
 	if private {
@@ -135,4 +144,23 @@ func DeleteStream(c echo.Context) error {
 	// 	Message: "Stream deleted.",
 	// }
 	return c.NoContent(http.StatusNoContent)
+}
+
+// AuthenticateStream Authenticates stream by checking StreamKey.
+func AuthenticateStream(c echo.Context) error {
+	streamName := c.QueryParam("name")
+	streamKey := c.QueryParam("key")
+	if data.ValidateStreamKey(streamName, streamKey) {
+		return c.String(http.StatusOK, "OK")
+	}
+	return c.String(http.StatusForbidden, "Forbidden")
+}
+
+func generateKey(n int) string {
+	b := make([]byte, n)
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
+	s := fmt.Sprintf("%x", b)
+	return string(s)
 }

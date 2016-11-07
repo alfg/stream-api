@@ -1,0 +1,106 @@
+{
+	"ImportPath": "stream-api",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v75",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/asaskevich/govalidator",
+			"Comment": "v5",
+			"Rev": "7b3beb6df3c42abd3509abfc3bcacc0fbfb7c877"
+		},
+		{
+			"ImportPath": "github.com/dgrijalva/jwt-go",
+			"Comment": "v3.0.0-10-g9ed569b",
+			"Rev": "9ed569b5d1ac936e6494082958d63a6aa4fff99a"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx",
+			"Comment": "sqlx-v1.1-82-g5f97679",
+			"Rev": "5f97679e23f75f42b265fec8d3bdb1c8de90b79d"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx/reflectx",
+			"Comment": "sqlx-v1.1-82-g5f97679",
+			"Rev": "5f97679e23f75f42b265fec8d3bdb1c8de90b79d"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/context",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/engine",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/engine/standard",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/log",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/middleware",
+			"Comment": "v1.4.4-2-gb0f1faa",
+			"Rev": "b0f1faa5d636cdfb81ac97f3034331ba5fa78ca5"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/bytes",
+			"Comment": "v0.1.0",
+			"Rev": "2d272df536d051e737aea353b86c979d6e88bce0"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/color",
+			"Comment": "v0.1.0",
+			"Rev": "2d272df536d051e737aea353b86c979d6e88bce0"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/log",
+			"Comment": "v0.1.0",
+			"Rev": "2d272df536d051e737aea353b86c979d6e88bce0"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/random",
+			"Comment": "v0.1.0",
+			"Rev": "2d272df536d051e737aea353b86c979d6e88bce0"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.6-9-gd228849",
+			"Rev": "d228849504861217f796da67fae4f6e347643f15"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Comment": "v1.1.0-118-gdeed33a",
+			"Rev": "deed33aec73ebdd869ff5fc6dcb9a3bd5a039a7f"
+		},
+		{
+			"ImportPath": "github.com/valyala/fasttemplate",
+			"Rev": "3b874956e03f1636d171bda64b130f9135f42cff"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "55a3084c9119aeb9ba2437d595b0a7e9cb635da9"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "c200b10b5d5e122be351b67af224adc6128af5bf"
+		}
+	]
+}

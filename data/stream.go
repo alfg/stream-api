@@ -1,19 +1,28 @@
 package data
 
 import (
-	"crypto/rand"
 	"fmt"
 	"stream-api/models"
 )
 
-// Stream model
+// GetStreams Gets all streams.
+func GetStreams() *[]models.StreamPrivate {
+	const query = `SELECT * FROM stream ORDER BY id ASC`
+
+	db, _ := ConnectDB()
+	stream := []models.StreamPrivate{}
+	db.Select(&stream, query)
+	fmt.Println(&stream)
+
+	return &stream
+}
 
 // GetStreamByID Gets stream by Id
-func GetStreamByID(id int) (*models.Stream, error) {
+func GetStreamByID(id int) (*models.StreamPrivate, error) {
 	const query = `SELECT * FROM stream WHERE id = $1`
 
 	db, _ := ConnectDB()
-	stream := models.Stream{}
+	stream := models.StreamPrivate{}
 	err := db.Get(&stream, query, id)
 	fmt.Println(&stream)
 	if err != nil {
@@ -24,21 +33,11 @@ func GetStreamByID(id int) (*models.Stream, error) {
 	return &stream, nil
 }
 
-// GetStreams Gets all streams.
-func GetStreams() *[]models.Stream {
-	const query = `SELECT * FROM stream ORDER BY id ASC`
-
-	db, _ := ConnectDB()
-	stream := []models.Stream{}
-	db.Select(&stream, query)
-	fmt.Println(&stream)
-
-	return &stream
-}
-
 // CreateStream creates a stream.
 func CreateStream(stream models.Stream) *models.Stream {
-	const query = "INSERT INTO stream (stream_name, type, description, url, secret_key, public_key, private) VALUES (:stream_name, :type, :description, :url, :secret_key, :public_key :private)"
+	const query = `INSERT INTO stream
+		(title, type, description, private, stream_name, stream_key)
+		VALUES (:title, :type, :description, :private, :stream_name, :stream_key)`
 
 	db, _ := ConnectDB()
 	tx := db.MustBegin()
@@ -51,22 +50,19 @@ func CreateStream(stream models.Stream) *models.Stream {
 	fmt.Println("transaction done")
 
 	lastID, _ := result.LastInsertId()
-	key := generateKey(10)
 	stream.ID = lastID
-	stream.SecretKey = key
 
 	return &stream
 }
 
 // UpdateStreamByID Update stream by id
-func UpdateStreamByID(id int, stream models.Stream) *models.Stream {
+func UpdateStreamByID(id int, stream models.StreamPrivate) *models.StreamPrivate {
 	const query = `UPDATE stream
 		SET stream_name = :stream_name,
 		type = :type,
 		description = :description
-		url = :url
-		secret_key = :secret_key
-		public_key = :public_key
+		stream_name = :stream_name
+		stream_key = :stream_key
 		private = :private
 		WHERE id = :id`
 
@@ -92,11 +88,28 @@ func DeleteStreamByID(id int) error {
 	return err
 }
 
-func generateKey(n int) string {
-	b := make([]byte, n)
-	if _, err := rand.Read(b); err != nil {
-		panic(err)
+// StreamExistsByName Checks if stream exists.
+func StreamExistsByName(streamName string) bool {
+	const query = `SELECT EXISTS (SELECT id FROM stream WHERE stream_name = $1)`
+
+	var exists bool
+	db, _ := ConnectDB()
+	err := db.QueryRow(query, streamName).Scan(&exists)
+	if err != nil {
+		fmt.Println(err)
 	}
-	s := fmt.Sprintf("%x", b)
-	return string(s)
+	return exists
+}
+
+// ValidateStreamKey Validates stream by checking stream name against stream key.
+func ValidateStreamKey(streamName, streamKey string) bool {
+	const query = `SELECT EXISTS (SELECT id FROM stream WHERE stream_name = $1 AND stream_key = $2)`
+
+	var valid bool
+	db, _ := ConnectDB()
+	err := db.QueryRow(query, streamName, streamKey).Scan(&valid)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return valid
 }
