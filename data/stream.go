@@ -34,7 +34,7 @@ func GetStreamByID(id int) (*models.StreamPrivate, error) {
 }
 
 // CreateStream creates a stream.
-func CreateStream(stream models.Stream) *models.Stream {
+func CreateStream(stream *models.Stream) *models.Stream {
 	const query = `INSERT INTO stream
 		(title, type, description, private, stream_name, stream_key)
 		VALUES (:title, :type, :description, :private, :stream_name, :stream_key)`
@@ -52,7 +52,7 @@ func CreateStream(stream models.Stream) *models.Stream {
 	lastID, _ := result.LastInsertId()
 	stream.ID = lastID
 
-	return &stream
+	return stream
 }
 
 // UpdateStreamByID Update stream by id

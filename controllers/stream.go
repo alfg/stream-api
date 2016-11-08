@@ -41,10 +41,14 @@ func GetStreams(c echo.Context) error {
 // CreateStream Creates a stream
 func CreateStream(c echo.Context) error {
 
-	streamName := c.FormValue("stream_name")
+	// Bind model to json request body.
+	s := new(models.Stream)
+	if err := c.Bind(s); err != nil {
+		return err
+	}
 
 	// Check if stream exists.
-	if data.StreamExistsByName(streamName) {
+	if data.StreamExistsByName(s.StreamName) {
 		resp := models.AlreadyExists{
 			Code:    409,
 			Message: "Stream name is taken.",
@@ -52,22 +56,9 @@ func CreateStream(c echo.Context) error {
 		return c.JSON(http.StatusConflict, resp)
 	}
 
-	// Set form data
-	title := c.FormValue("title")
-	_type := c.FormValue("type")
-	description := c.FormValue("description")
-	private, _ := strconv.ParseBool(c.FormValue("private"))
-
+	// Generate Key.
 	streamKey := generateKey(10)
-
-	s := models.Stream{
-		Title:       title,
-		Type:        _type,
-		Description: description,
-		Private:     private,
-		StreamName:  streamName,
-		StreamKey:   streamKey,
-	}
+	s.StreamKey = streamKey
 
 	fmt.Print("validating stream")
 	// Validate Stream
@@ -88,6 +79,12 @@ func CreateStream(c echo.Context) error {
 
 // UpdateStream Updates a stream
 func UpdateStream(c echo.Context) error {
+	// Bind model to json request body.
+	s := new(models.Stream)
+	if err := c.Bind(s); err != nil {
+		return err
+	}
+
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	stream, err := data.GetStreamByID(id)
@@ -100,26 +97,10 @@ func UpdateStream(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, resp)
 	}
 
-	title := c.FormValue("title")
-	_type := c.FormValue("type")
-	description := c.FormValue("email")
-	private, _ := strconv.ParseBool(c.FormValue("private"))
-
-	if title != "" {
-		stream.Title = title
-	}
-
-	if _type != "" {
-		stream.Type = _type
-	}
-
-	if description != "" {
-		stream.Description = description
-	}
-
-	if private {
-		stream.Private = private
-	}
+	stream.Title = s.Title
+	stream.Type = s.Type
+	stream.Description = s.Description
+	stream.Private = s.Private
 
 	updatedStream := data.UpdateStreamByID(id, *stream)
 	return c.JSON(http.StatusOK, updatedStream)
