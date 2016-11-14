@@ -15,9 +15,33 @@ import (
 
 // GetStream Gets stream.
 func GetStream(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	// id, _ := strconv.Atoi(c.Param("id"))
+	// See: https://github.com/labstack/echo/issues/321
+
+	// TODO: Check for id or name (string) in same handler.
+	id, _ := strconv.Atoi(c.P(0))
 
 	stream, err := data.GetStreamByID(id)
+	if err != nil {
+		fmt.Println(err)
+		resp := models.DoesNotExist{
+			Code:    404,
+			Message: "Stream does not exist",
+		}
+		return c.JSON(http.StatusNotFound, resp)
+	}
+	fmt.Println(stream)
+
+	return c.JSON(http.StatusOK, stream)
+}
+
+func GetStreamByName(c echo.Context) error {
+	// streamName := c.Param("name")
+	name := c.P(0)
+
+	fmt.Println(name)
+
+	stream, err := data.GetStreamByName(name)
 	if err != nil {
 		fmt.Println(err)
 		resp := models.DoesNotExist{
@@ -142,6 +166,15 @@ func AuthenticateStream(c echo.Context) error {
 func GetAllStreamStats(c echo.Context) error {
 	client, e := services.New()
 	resp, e := client.GetRTMPStats()
+	if e != nil {
+		fmt.Print(e)
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+func StreamActive(c echo.Context) error {
+	streamName := c.Param("name")
+	resp, e := services.IsStreamActive(streamName)
 	if e != nil {
 		fmt.Print(e)
 	}

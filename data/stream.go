@@ -33,6 +33,24 @@ func GetStreamByID(id int) (*models.StreamPrivate, error) {
 	return &stream, nil
 }
 
+// GetStreamByName Gets stream by Name
+func GetStreamByName(name string) (*models.StreamPrivate, error) {
+	const query = `SELECT * FROM stream WHERE stream_name = $1`
+
+	fmt.Println(name)
+
+	db, _ := ConnectDB()
+	stream := models.StreamPrivate{}
+	err := db.Get(&stream, query, name)
+	fmt.Println(&stream)
+	if err != nil {
+		fmt.Println(err)
+		return &stream, err
+	}
+
+	return &stream, nil
+}
+
 // CreateStream creates a stream.
 func CreateStream(stream *models.Stream) *models.Stream {
 	const query = `INSERT INTO stream

@@ -33,8 +33,8 @@ type Application struct {
 
 // Live model.
 type Live struct {
-	Stream   Stream `json:"stream" xml:"stream"`
-	NClients int    `json:"nclients" xml:"nclients"`
+	Stream   *Stream `json:"stream,omitempty" xml:"stream"`
+	NClients int     `json:"nclients" xml:"nclients"`
 }
 
 type Stream struct {
@@ -48,9 +48,8 @@ type Stream struct {
 	BWVideo       int            `json:"bw_video" xml:"bw_video"`
 	StreamClients []StreamClient `json:"client" xml:"client"`
 	Meta          []Meta         `json:"meta" xml:"meta"`
-	// Publishing    bool           `json:"publishing,omitempty" xml:"publishing"`
-	Active     bool `json:"active"`
-	Publishing bool `json:"publishing"`
+	Active        bool           `json:"active"`
+	Publishing    bool           `json:"publishing"`
 }
 
 type Clients struct {
@@ -87,6 +86,10 @@ type Audio struct {
 	SampleRate int    `json:"sample_rate" xml:"sample_rate"`
 }
 
+type StreamActive struct {
+	Active bool `json:"active"`
+}
+
 // GetRTMPStats Gets rtmp stats.
 func (c *Client) GetRTMPStats() (*RTMPStats, error) {
 
@@ -102,9 +105,35 @@ func (c *Client) GetRTMPStats() (*RTMPStats, error) {
 	// If streams are ingesting, then they are active and publishing.
 	for i := range rsp.Server {
 		for j := range rsp.Server[i].Application {
-			rsp.Server[i].Application[j].Live.Stream.Active = true
-			rsp.Server[i].Application[j].Live.Stream.Publishing = true
+			stream := rsp.Server[i].Application[j].Live.Stream
+			if stream != nil {
+				stream.Active = true
+				stream.Publishing = true
+			}
 		}
 	}
 	return rsp, e
+}
+
+// IsStreamActive Checks stats if name exists and is active.
+func IsStreamActive(name string) (*StreamActive, error) {
+	client, e := New()
+	rsp, e := client.GetRTMPStats()
+	if e != nil {
+		fmt.Print(e)
+	}
+
+	sa := &StreamActive{}
+
+	// Check if the name exists in stats and return results.
+	for i := range rsp.Server {
+		for j := range rsp.Server[i].Application {
+			stream := rsp.Server[i].Application[j].Live.Stream
+			if stream != nil && stream.Name == name {
+				sa.Active = true
+				return sa, e
+			}
+		}
+	}
+	return sa, e
 }
