@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"stream-api/data"
 	"stream-api/models"
+	"stream-api/services"
 
 	valid "github.com/asaskevich/govalidator"
 	"github.com/labstack/echo"
@@ -135,6 +136,16 @@ func AuthenticateStream(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	}
 	return c.String(http.StatusForbidden, "Forbidden")
+}
+
+// GetAllStreamStats Gets all stream stats from rtmp server.
+func GetAllStreamStats(c echo.Context) error {
+	client, e := services.New()
+	resp, e := client.GetRTMPStats()
+	if e != nil {
+		fmt.Print(e)
+	}
+	return c.JSON(http.StatusOK, resp)
 }
 
 func generateKey(n int) string {

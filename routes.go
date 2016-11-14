@@ -25,6 +25,7 @@ func registerRoutes(e *echo.Echo) {
 	// Stream routes
 	v1.Get("/streams", controllers.GetStreams)
 	v1.Get("/streams/:id", controllers.GetStream)
+	v1.Get("/streams/stats", controllers.GetAllStreamStats)
 	v1.Post("/streams", controllers.CreateStream)
 	v1.Put("/streams/:id", controllers.UpdateStream)
 	v1.Delete("/streams/:id", controllers.DeleteStream)
