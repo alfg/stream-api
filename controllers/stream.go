@@ -164,7 +164,7 @@ func AuthenticateStream(c echo.Context) error {
 
 // GetAllStreamStats Gets all stream stats from rtmp server.
 func GetAllStreamStats(c echo.Context) error {
-	client, e := services.New()
+	client, e := services.NewClient()
 	resp, e := client.GetRTMPStats()
 	if e != nil {
 		fmt.Print(e)

@@ -91,7 +91,7 @@ type StreamActive struct {
 }
 
 // GetRTMPStats Gets rtmp stats.
-func (c *Client) GetRTMPStats() (*RTMPStats, error) {
+func (c *HTTPClient) GetRTMPStats() (*RTMPStats, error) {
 
 	var url = baseURL + "stat.xml"
 
@@ -117,7 +117,7 @@ func (c *Client) GetRTMPStats() (*RTMPStats, error) {
 
 // IsStreamActive Checks stats if name exists and is active.
 func IsStreamActive(name string) (*StreamActive, error) {
-	client, e := New()
+	client, e := NewClient()
 	rsp, e := client.GetRTMPStats()
 	if e != nil {
 		fmt.Print(e)

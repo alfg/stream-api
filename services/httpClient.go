@@ -10,11 +10,11 @@ import (
 	"time"
 )
 
-type Client struct {
+type HTTPClient struct {
 	*http.Client
 }
 
-func (c *Client) loadResponse(url string, i interface{}, format string) error {
+func (c *HTTPClient) loadResponse(url string, i interface{}, format string) error {
 
 	fmt.Println("querying..." + url)
 	rsp, e := c.Get(url)
@@ -32,8 +32,6 @@ func (c *Client) loadResponse(url string, i interface{}, format string) error {
 		return fmt.Errorf("expected status 2xx, got %s: %s", rsp.Status, string(b))
 	}
 
-	fmt.Println(string(b))
-
 	if format == "json" {
 		return json.Unmarshal(b, &i)
 	} else if format == "xml" {
@@ -42,14 +40,14 @@ func (c *Client) loadResponse(url string, i interface{}, format string) error {
 	return fmt.Errorf("expected format, got %s", format)
 }
 
-func New() (*Client, error) {
+func NewClient() (*HTTPClient, error) {
 	var netTransport = &http.Transport{
 		Dial: (&net.Dialer{
 			Timeout: 5 * time.Second,
 		}).Dial,
 		TLSHandshakeTimeout: 5 * time.Second,
 	}
-	return &Client{Client: &http.Client{
+	return &HTTPClient{Client: &http.Client{
 		Timeout:   time.Second * 10,
 		Transport: netTransport,
 	}}, nil
