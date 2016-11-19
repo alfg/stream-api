@@ -37,8 +37,6 @@ func GetStreamByID(id int) (*models.StreamPrivate, error) {
 func GetStreamByName(name string) (*models.StreamPrivate, error) {
 	const query = `SELECT * FROM stream WHERE stream_name = $1`
 
-	fmt.Println(name)
-
 	db, _ := ConnectDB()
 	stream := models.StreamPrivate{}
 	err := db.Get(&stream, query, name)

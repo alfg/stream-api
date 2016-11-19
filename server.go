@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"stream-api/configuration"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
@@ -18,7 +19,7 @@ func configRuntime() {
 func startServer() {
 	// Echo instance
 	e := echo.New()
-	config := ConfigurationSetup()
+	config := configuration.ConfigurationSetup()
 
 	// Middleware
 	e.Use(middleware.Logger())

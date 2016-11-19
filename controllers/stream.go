@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"stream-api/configuration"
 	"stream-api/data"
 	"stream-api/models"
 	"stream-api/services"
@@ -51,6 +52,9 @@ func GetStreamByName(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, resp)
 	}
 	fmt.Println(stream)
+
+	// Build StreamURL.
+	stream.StreamURL = buildStreamURL(stream.StreamName)
 
 	return c.JSON(http.StatusOK, stream)
 }
@@ -188,4 +192,11 @@ func generateKey(n int) string {
 	}
 	s := fmt.Sprintf("%x", b)
 	return string(s)
+}
+
+func buildStreamURL(name string) string {
+
+	config := configuration.ConfigurationSetup()
+	url := fmt.Sprintf(config.StreamServerLiveURL, name)
+	return string(url)
 }

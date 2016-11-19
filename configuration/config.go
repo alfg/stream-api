@@ -1,4 +1,4 @@
-package main
+package configuration
 
 import (
 	"encoding/json"
@@ -8,11 +8,12 @@ import (
 
 // Configuration configuration setup
 type Configuration struct {
-	Host   string      `json:"host"`
-	Port   string      `json:"port"`
-	JWTKey string      `json:"jwtKey"`
+	Host                string `json:"host"`
+	Port                string `json:"port"`
+	JWTKey              string `json:"jwtKey"`
+	StreamServerLiveURL string `json:"streamServerLiveUrl"`
+	StreamServerRTMPURL string `json:"streamServerRtmpUrl"`
 }
-
 
 // ConfigurationSetup configuration setup
 func ConfigurationSetup() *Configuration {
