@@ -10,6 +10,8 @@ type Stream struct {
 	StreamName  string `db:"stream_name" json:"stream_name,omitempty" valid:"alphanum,required"`
 	StreamKey   string `db:"stream_key" json:"stream_key,omitempty" valid:"alphanum,required"` // StreamKey?
 	StreamRTMP  string `json:"stream_rtmp_url"`
+	Live        bool   `json:"live"`
+	Thumbnail   string `json:"thumbnail"`
 }
 
 // StreamPrivate model for displaying stream model without exposing key.
@@ -24,4 +26,5 @@ type StreamPrivate struct {
 	StreamKey   string `db:"stream_key" json:"-" valid:"alphanum,required"` // StreamKey?
 	StreamURL   string `json:"stream_url"`
 	Live        bool   `json:"live"`
+	Thumbnail   string `json:"thumbnail"`
 }

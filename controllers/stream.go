@@ -77,6 +77,7 @@ func GetFeaturedStreams(c echo.Context) error {
 		name := v.StreamName
 		live, _ := services.IsStreamActive(name)
 		(*streams)[k].Live = live.Active
+		(*streams)[k].Thumbnail = buildThumbnailURL(v.StreamName)
 	}
 
 	fmt.Println(streams)
@@ -214,5 +215,12 @@ func buildStreamURL(name string) string {
 
 	config := configuration.ConfigurationSetup()
 	url := fmt.Sprintf(config.StreamServerLiveURL, name)
+	return string(url)
+}
+
+func buildThumbnailURL(name string) string {
+
+	config := configuration.ConfigurationSetup()
+	url := fmt.Sprintf(config.StreamThumbnailURL, name)
 	return string(url)
 }
