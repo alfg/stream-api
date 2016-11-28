@@ -17,6 +17,28 @@ func GetStreams() *[]models.StreamPrivate {
 	return &stream
 }
 
+// GetFeaturedStreams Gets all streams.
+// TODO: Featured streams should be live only.
+func GetFeaturedStreams(limit int) (*[]models.StreamPrivate, error) {
+	const query = `
+		SELECT * FROM stream
+		WHERE private = 0
+		ORDER BY id DESC
+		LIMIT $1
+	`
+
+	db, _ := ConnectDB()
+	stream := []models.StreamPrivate{}
+	err := db.Select(&stream, query, limit)
+	if err != nil {
+		fmt.Println(err)
+		return &stream, err
+	}
+	fmt.Println(&stream)
+
+	return &stream, nil
+}
+
 // GetStreamByID Gets stream by Id
 func GetStreamByID(id int) (*models.StreamPrivate, error) {
 	const query = `SELECT * FROM stream WHERE id = $1`

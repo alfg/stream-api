@@ -26,6 +26,7 @@ func registerRoutes(e *echo.Echo) {
 	v1.Get("/streams", controllers.GetStreams)
 	v1.Get("/streams/stats", controllers.GetAllStreamStats)
 	// v1.Get("/streams/:id", controllers.GetStream)
+	v1.Get("/streams/featured", controllers.GetFeaturedStreams)
 	v1.Get("/streams/:name", controllers.GetStreamByName)
 	v1.Get("/streams/:name/active", controllers.StreamActive)
 	v1.Post("/streams", controllers.CreateStream)

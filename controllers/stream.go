@@ -36,6 +36,7 @@ func GetStream(c echo.Context) error {
 	return c.JSON(http.StatusOK, stream)
 }
 
+// GetStreamByName Gets a stream by name.
 func GetStreamByName(c echo.Context) error {
 	// streamName := c.Param("name")
 	name := c.P(0)
@@ -65,6 +66,21 @@ func GetStreams(c echo.Context) error {
 	fmt.Println(stream)
 
 	return c.JSON(http.StatusOK, stream)
+}
+
+// GetFeaturedStreams Gets featured streams.
+func GetFeaturedStreams(c echo.Context) error {
+	streams, _ := data.GetFeaturedStreams(20)
+
+	// Check each stream if active.
+	for k, v := range *streams {
+		name := v.StreamName
+		live, _ := services.IsStreamActive(name)
+		(*streams)[k].Live = live.Active
+	}
+
+	fmt.Println(streams)
+	return c.JSON(http.StatusOK, streams)
 }
 
 // CreateStream Creates a stream

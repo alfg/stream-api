@@ -12,6 +12,8 @@ type Stream struct {
 	StreamRTMP  string `json:"stream_rtmp_url"`
 }
 
+// StreamPrivate model for displaying stream model without exposing key.
+// This should be used as default instead of the above Stream model.
 type StreamPrivate struct {
 	ID          int64  `db:"id" json:"id,omitempty"`
 	Title       string `db:"title" json:"title" valid:"required"`
@@ -21,4 +23,5 @@ type StreamPrivate struct {
 	StreamName  string `db:"stream_name" json:"stream_name" valid:"alphanum,required"`
 	StreamKey   string `db:"stream_key" json:"-" valid:"alphanum,required"` // StreamKey?
 	StreamURL   string `json:"stream_url"`
+	Live        bool   `json:"live"`
 }
