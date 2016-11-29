@@ -9,7 +9,8 @@
       "password": "",
       "database": ""
     },
-    "streamServerLiveUrl": "http://192.168.99.100:8080/live/%s.m3u8",
     "streamThumbnailUrl": "http://192.168.99.100:8080/live/%s.png",
-    "streamServerRtmpUrl": "http://192.168.99.100:8080/stream"
+    "streamServerRtmpUrl": "rtmp://192.168.99.100:8080/stream",
+    "streamServerLiveUrl": "http://localhost:3000/%s",
+    "streamVideoUrl": "http://192.168.99.100:8080/live/%s.m3u8"
 }

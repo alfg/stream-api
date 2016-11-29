@@ -14,6 +14,7 @@ type Configuration struct {
 	StreamServerLiveURL string `json:"streamServerLiveUrl"`
 	StreamThumbnailURL  string `json:"streamThumbnailUrl"`
 	StreamServerRTMPURL string `json:"streamServerRtmpUrl"`
+	StreamVideoURL      string `json:"streamVideoUrl"`
 }
 
 // ConfigurationSetup configuration setup

@@ -25,6 +25,8 @@ type StreamPrivate struct {
 	StreamName  string `db:"stream_name" json:"stream_name" valid:"alphanum,required"`
 	StreamKey   string `db:"stream_key" json:"-" valid:"alphanum,required"` // StreamKey?
 	StreamURL   string `json:"stream_url"`
+	StreamRTMP  string `json:"stream_rtmp_url"`
+	VideoURL    string `json:"video_url"`
 	Live        bool   `json:"live"`
 	Thumbnail   string `json:"thumbnail"`
 }

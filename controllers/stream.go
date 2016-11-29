@@ -56,6 +56,9 @@ func GetStreamByName(c echo.Context) error {
 
 	// Build StreamURL.
 	stream.StreamURL = buildStreamURL(stream.StreamName)
+	stream.VideoURL = buildVideoURL(stream.StreamName)
+	stream.StreamRTMP = buildRTMPURL(stream.StreamRTMP)
+	stream.Thumbnail = buildThumbnailURL(stream.StreamName)
 
 	return c.JSON(http.StatusOK, stream)
 }
@@ -70,7 +73,7 @@ func GetStreams(c echo.Context) error {
 
 // GetFeaturedStreams Gets featured streams.
 func GetFeaturedStreams(c echo.Context) error {
-	streams, _ := data.GetFeaturedStreams(20)
+	streams, _ := data.GetFeaturedStreams(10)
 
 	// Check each stream if active.
 	for k, v := range *streams {
@@ -218,9 +221,23 @@ func buildStreamURL(name string) string {
 	return string(url)
 }
 
+func buildVideoURL(name string) string {
+
+	config := configuration.ConfigurationSetup()
+	url := fmt.Sprintf(config.StreamVideoURL, name)
+	return string(url)
+}
+
 func buildThumbnailURL(name string) string {
 
 	config := configuration.ConfigurationSetup()
 	url := fmt.Sprintf(config.StreamThumbnailURL, name)
+	return string(url)
+}
+
+func buildRTMPURL(name string) string {
+
+	config := configuration.ConfigurationSetup()
+	url := fmt.Sprintf(config.StreamServerRTMPURL)
 	return string(url)
 }
