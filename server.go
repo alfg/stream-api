@@ -6,7 +6,6 @@ import (
 	"stream-api/configuration"
 
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/standard"
 	"github.com/labstack/echo/middleware"
 )
 
@@ -36,7 +35,8 @@ func startServer() {
 	// Start server
 	fmt.Printf("Starting server on port %s\n", config.Port)
 	// e.Run(standard.New(fmt.Sprintf("%s:%s", config.Host, config.Port)))
-	e.Run(standard.New(":4000"))
+	// e.Run(standard.New(":4000"))
+	e.Logger.Fatal(e.Start(":4000"))
 }
 
 func main() {

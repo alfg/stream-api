@@ -16,11 +16,11 @@ import (
 
 // GetStream Gets stream.
 func GetStream(c echo.Context) error {
-	// id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 	// See: https://github.com/labstack/echo/issues/321
 
 	// TODO: Check for id or name (string) in same handler.
-	id, _ := strconv.Atoi(c.P(0))
+	// id, _ := strconv.Atoi(c.P(0))
 
 	stream, err := data.GetStreamByID(id)
 	if err != nil {
@@ -38,8 +38,8 @@ func GetStream(c echo.Context) error {
 
 // GetStreamByName Gets a stream by name.
 func GetStreamByName(c echo.Context) error {
-	// streamName := c.Param("name")
-	name := c.P(0)
+	name := c.Param("name")
+	// name := c.P(0)
 
 	fmt.Println(name)
 

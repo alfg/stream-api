@@ -11,34 +11,34 @@ import (
 func registerRoutes(e *echo.Echo) {
 	// config := ConfigurationSetup()
 
-	e.Get("/", index)
-	e.Get("/stream/auth", controllers.AuthenticateStream)
+	e.GET("/", index)
+	e.GET("/stream/auth", controllers.AuthenticateStream)
 
 	// User routes
 	v1 := e.Group("/v1")
-	v1.Get("/users", controllers.GetUsers)
-	v1.Get("/users/:id", controllers.GetUser)
-	v1.Post("/users", controllers.CreateUser)
-	v1.Put("/users/:id", controllers.UpdateUser)
-	v1.Delete("/users/:id", controllers.DeleteUser)
+	v1.GET("/users", controllers.GetUsers)
+	v1.GET("/users/:id", controllers.GetUser)
+	v1.POST("/users", controllers.CreateUser)
+	v1.PUT("/users/:id", controllers.UpdateUser)
+	v1.DELETE("/users/:id", controllers.DeleteUser)
 
 	// Stream routes
-	v1.Get("/streams", controllers.GetStreams)
-	v1.Get("/streams/stats", controllers.GetAllStreamStats)
+	v1.GET("/streams", controllers.GetStreams)
+	v1.GET("/streams/stats", controllers.GetAllStreamStats)
 	// v1.Get("/streams/:id", controllers.GetStream)
-	v1.Get("/streams/featured", controllers.GetFeaturedStreams)
-	v1.Get("/streams/:name", controllers.GetStreamByName)
-	v1.Get("/streams/:name/active", controllers.StreamActive)
-	v1.Post("/streams", controllers.CreateStream)
-	v1.Put("/streams/:id", controllers.UpdateStream)
-	v1.Delete("/streams/:id", controllers.DeleteStream)
-	v1.Get("/stream/auth", controllers.AuthenticateStream)
+	v1.GET("/streams/featured", controllers.GetFeaturedStreams)
+	v1.GET("/streams/:name", controllers.GetStreamByName)
+	v1.GET("/streams/:name/active", controllers.StreamActive)
+	v1.POST("/streams", controllers.CreateStream)
+	v1.PUT("/streams/:id", controllers.UpdateStream)
+	v1.DELETE("/streams/:id", controllers.DeleteStream)
+	v1.GET("/stream/auth", controllers.AuthenticateStream)
 
 	// Restricted group
 	// Temporary: Run scripts/token.go to generate auth token
 	r := e.Group("/restricted")
 	// r.Use(JWTAuth(config.JWTKey))
-	r.Get("", restricted)
+	r.GET("", restricted)
 }
 
 // Handlers

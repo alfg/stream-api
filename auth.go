@@ -19,7 +19,7 @@ func JWTAuth(key string) echo.HandlerFunc {
 		// 	return nil
 		// }
 
-		auth := c.Request().Header().Get("Authorization")
+		auth := c.Request().Header.Get("Authorization")
 		l := len(Bearer)
 		he := echo.NewHTTPError(http.StatusUnauthorized)
 
