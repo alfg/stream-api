@@ -1,0 +1,4 @@
+stream-api:
+  build: .
+  ports:
+    - 4000:4000
