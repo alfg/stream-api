@@ -81,6 +81,9 @@ func GetFeaturedStreams(c echo.Context) error {
 		live, _ := services.IsStreamActive(name)
 		(*streams)[k].Live = live.Active
 		(*streams)[k].Thumbnail = buildThumbnailURL(v.StreamName)
+		(*streams)[k].StreamURL = buildStreamURL(v.StreamName)
+		(*streams)[k].VideoURL = buildVideoURL(v.StreamName)
+		(*streams)[k].StreamRTMP = buildRTMPURL(v.StreamRTMP)
 	}
 
 	fmt.Println(streams)

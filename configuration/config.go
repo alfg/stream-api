@@ -29,12 +29,36 @@ type DatabaseConfiguration struct {
 
 // ConfigurationSetup configuration setup
 func ConfigurationSetup() *Configuration {
-	file, _ := os.Open("conf.json")
+	file, _ := os.Open("defaults.json")
 	decoder := json.NewDecoder(file)
 	configuration := Configuration{}
 	err := decoder.Decode(&configuration)
 	if err != nil {
 		fmt.Println("error: ", err)
 	}
+	getConfigFromEnv(&configuration)
 	return &configuration
+}
+
+func getConfigFromEnv(config *Configuration) {
+	streamThumbnailURL := os.Getenv("STREAM_THUMBNAIL_URL")
+	if streamThumbnailURL != "" {
+		config.StreamThumbnailURL = streamThumbnailURL
+	}
+
+	streamServerRtmpURL := os.Getenv("STREAM_SERVER_RTMP_URL")
+	if streamServerRtmpURL != "" {
+		config.StreamServerRTMPURL = streamServerRtmpURL
+	}
+
+	streamServerLiveURL := os.Getenv("STREAM_SERVER_LIVE_URL")
+	if streamThumbnailURL != "" {
+		config.StreamServerLiveURL = streamServerLiveURL
+	}
+
+	streamVideoURL := os.Getenv("STREAM_VIDEO_URL")
+	if streamVideoURL != "" {
+		config.StreamVideoURL = streamVideoURL
+	}
+
 }
