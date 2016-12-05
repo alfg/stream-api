@@ -2,3 +2,7 @@ stream-api:
   build: .
   ports:
     - 4000:4000
+  environment:
+    - DATABASE=/opt/sqlite/test.db
+  volumes:
+    - ./test.db:/opt/sqlite/test.db
