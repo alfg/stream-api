@@ -9,8 +9,11 @@ RUN apk add --update ca-certificates git gcc g++ && \
     cd /go/src/stream-api && \
     go get -d -v ./... && \
     go build -o /usr/bin/stream-api . && \
+    cp /go/src/stream-api/defaults.json /defaults.json && \
     apk del git gcc g++ && \
     rm -rf /var/cache/apk/* && \
     rm -rf /go
 
-ENTRYPOINT ["/usr/bin/stream-api"]
+WORKDIR /
+
+CMD ["/usr/bin/stream-api"]
