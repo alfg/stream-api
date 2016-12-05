@@ -16,6 +16,7 @@ type Configuration struct {
 	StreamThumbnailURL  string                `json:"streamThumbnailUrl"`
 	StreamServerRTMPURL string                `json:"streamServerRtmpUrl"`
 	StreamVideoURL      string                `json:"streamVideoUrl"`
+	RtmpHost            string                `json:"rtmpHost"`
 }
 
 // DatabaseConfiguration Database configuration setup.
@@ -59,6 +60,11 @@ func getConfigFromEnv(config *Configuration) {
 	streamVideoURL := os.Getenv("STREAM_VIDEO_URL")
 	if streamVideoURL != "" {
 		config.StreamVideoURL = streamVideoURL
+	}
+
+	rtmpHost := os.Getenv("RTMP_HOST")
+	if rtmpHost != "" {
+		config.RtmpHost = rtmpHost
 	}
 
 }

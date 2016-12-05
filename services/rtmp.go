@@ -1,8 +1,9 @@
 package services
 
-import "fmt"
-
-const baseURL = "http://192.168.99.100:8080/"
+import (
+	"fmt"
+	"stream-api/configuration"
+)
 
 // RTMPStats model.
 type RTMPStats struct {
@@ -93,7 +94,8 @@ type StreamActive struct {
 // GetRTMPStats Gets rtmp stats.
 func (c *HTTPClient) GetRTMPStats() (*RTMPStats, error) {
 
-	var url = baseURL + "stat.xml"
+	config := configuration.ConfigurationSetup()
+	var url = config.RtmpHost + "stat.xml"
 
 	rsp := &RTMPStats{}
 	e := c.loadResponse(url, rsp, "xml")
