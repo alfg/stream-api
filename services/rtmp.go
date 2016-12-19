@@ -95,7 +95,7 @@ type StreamActive struct {
 func (c *HTTPClient) GetRTMPStats() (*RTMPStats, error) {
 
 	config := configuration.ConfigurationSetup()
-	var url = config.RtmpHost + "stat.xml"
+	var url = config.RtmpHost + "/stat.xml"
 
 	rsp := &RTMPStats{}
 	e := c.loadResponse(url, rsp, "xml")

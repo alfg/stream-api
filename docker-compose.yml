@@ -4,5 +4,10 @@ stream-api:
     - 4000:4000
   environment:
     - DATABASE=/opt/sqlite/test.db
+    - STREAM_THUMBNAIL_URL=http://192.168.99.100:8080/live/%s.png
+    - STREAM_SERVER_RTMP_URL=rtmp://192.168.99.100:8080/stream
+    - STREAM_SERVER_LIVE_URL=http://localhost:3000/%s
+    - STREAM_VIDEO_URL=http://192.168.99.100:8080/live/%s.m3u8
+    - RTMP_HOST=http://192.168.99.100:8080
   volumes:
     - ./test.db:/opt/sqlite/test.db
