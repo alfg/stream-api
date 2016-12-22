@@ -65,10 +65,20 @@ func GetStreamByName(c echo.Context) error {
 
 // GetStreams Gets stream.
 func GetStreams(c echo.Context) error {
-	stream := data.GetStreams()
-	fmt.Println(stream)
+	streams := data.GetStreams()
 
-	return c.JSON(http.StatusOK, stream)
+	// Check each stream if active.
+	for k, v := range *streams {
+		name := v.StreamName
+		live, _ := services.IsStreamActive(name)
+		(*streams)[k].Live = live.Active
+		(*streams)[k].Thumbnail = buildThumbnailURL(v.StreamName)
+		(*streams)[k].StreamURL = buildStreamURL(v.StreamName)
+		(*streams)[k].VideoURL = buildVideoURL(v.StreamName)
+		(*streams)[k].StreamRTMP = buildRTMPURL(v.StreamRTMP)
+	}
+
+	return c.JSON(http.StatusOK, streams)
 }
 
 // GetFeaturedStreams Gets featured streams.
