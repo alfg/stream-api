@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"stream-api/configuration"
+	"streamcat-api/configuration"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3" // sqlite3 driver

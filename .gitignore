@@ -2,6 +2,6 @@
 gin-bin
 test.db
 .DS_Store
-stream-api
+streamcat-api
 *.db
 vendor/

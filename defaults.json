@@ -9,9 +9,9 @@
       "password": "",
       "database": "test.db"
     },
-    "streamThumbnailUrl": "http://192.168.99.100:8080/live/%s.png",
-    "streamServerRtmpUrl": "rtmp://192.168.99.100:8080/stream",
-    "streamServerLiveUrl": "http://localhost:3000/%s",
-    "streamVideoUrl": "http://192.168.99.100:8080/live/%s.m3u8",
-    "rtmpHost": "http://192.168.99.100:8080"
+    "streamThumbnailUrl": "http://live.streamcat.tv:8080/live/%s.png",
+    "streamServerRtmpUrl": "rtmp://live.streamcat.tv:8080/stream",
+    "streamServerLiveUrl": "http://streamcat.tv/%s",
+    "streamVideoUrl": "http://live.streamcat.tv:8080/live/%s.m3u8",
+    "rtmpHost": "http://live.streamcat.tv:8080"
 }

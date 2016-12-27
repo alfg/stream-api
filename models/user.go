@@ -7,3 +7,8 @@ type User struct {
 	LastName  string `db:"last_name" json:"last_name,omitempty" valid:"alphanum,required"`
 	Email     string `db:"email" json:"email,omitempty" valid:"email,required"`
 }
+
+type AuthUser struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}

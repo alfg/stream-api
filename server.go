@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"stream-api/configuration"
+	"streamcat-api/configuration"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"

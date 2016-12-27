@@ -1,18 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
-	"stream-api/controllers"
-	"stream-api/models"
+	"streamcat-api/configuration"
+	"streamcat-api/controllers"
+	"streamcat-api/models"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func registerRoutes(e *echo.Echo) {
-	// config := ConfigurationSetup()
+	config := configuration.ConfigurationSetup()
 
 	e.GET("/", index)
-	e.GET("/stream/auth", controllers.AuthenticateStream)
+	e.GET("/stream/auth", controllers.AuthenticateStream) // RTMP auth check.
+	e.POST("/login", login)                               // JWT login.
 
 	// User routes
 	v1 := e.Group("/v1")
@@ -35,16 +39,16 @@ func registerRoutes(e *echo.Echo) {
 	v1.GET("/stream/auth", controllers.AuthenticateStream)
 
 	// Restricted group
-	// Temporary: Run scripts/token.go to generate auth token
 	r := e.Group("/restricted")
-	// r.Use(JWTAuth(config.JWTKey))
+	fmt.Println(config.JWTKey)
+	r.Use(middleware.JWT([]byte(config.JWTKey)))
 	r.GET("", restricted)
 }
 
 // Handlers
 func index(c echo.Context) error {
 	i := models.Index{
-		Name:    "stream-api",
+		Name:    "streamcat-api",
 		Version: "0.0.1",
 	}
 	return c.JSON(http.StatusOK, &i)

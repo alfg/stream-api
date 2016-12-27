@@ -2,7 +2,7 @@ package services
 
 import (
 	"fmt"
-	"stream-api/configuration"
+	"streamcat-api/configuration"
 )
 
 // RTMPStats model.

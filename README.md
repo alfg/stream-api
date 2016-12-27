@@ -1,4 +1,4 @@
-## stream-api
+## streamcat-api
 
 #### Tech Stack
 * Go1.5.1
@@ -20,7 +20,7 @@ export PATH=$PATH:$GOPATH/bin
 ## GoDep
 ```
 go get github.com/tools/godep
-cd ~/Source/Go/src/stream-api
+cd ~/Source/Go/src/streamcat-api
 godep restore
 godep save ./...
 ```
@@ -31,10 +31,10 @@ godep save ./...
 * Setup GOPATH project structure
 ```
 cd ~/Source/Go
-git clone stream-api src
-cd src/stream-api
-go install ./..
-go build stream-api && ./stream-api
+git clone github.com/streamcatTV/streamcat-api src
+cd src/streamcat-api
+go get -d -v ./...
+go build streamcat-api && ./streamcat-api
 ```
 
 ```
@@ -63,9 +63,9 @@ Create your Docker Machine, or use the default env.
 `eval "$(docker-machine env default)"`
 
 ```
-git clone stream-api
-docker build -t golang-app .
-docker run -p 8080:4000 -d golang-app
+git clone streamcat-api
+docker build -t streamcat-api .
+docker run -p 8080:4000 -d streamcat-api
 ```
 
 Load `localhost:8080` into your browser. If you are using a Docker VM, use the VM's IP address instead. i.e. `192.168.99.100:8080`

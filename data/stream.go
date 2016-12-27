@@ -2,7 +2,7 @@ package data
 
 import (
 	"fmt"
-	"stream-api/models"
+	"streamcat-api/models"
 )
 
 // GetStreams Gets all streams.

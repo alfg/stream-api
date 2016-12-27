@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"stream-api/data"
-	"stream-api/models"
+	"streamcat-api/data"
+	"streamcat-api/models"
 
 	valid "github.com/asaskevich/govalidator"
 	"github.com/labstack/echo"
