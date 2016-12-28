@@ -8,23 +8,23 @@ import (
 	"streamcat-api/configuration"
 
 	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3" // sqlite3 driver
+	_ "github.com/lib/pq" // Postgres driver.
 )
 
-const dialect = "sqlite3"
+const dialect = "postgres"
 
-var database = os.Getenv("DATABASE")
+var connectionString = os.Getenv("DATABASE")
 
 func init() {
 	config := configuration.ConfigurationSetup()
-	if database == "" {
-		database = config.Database.Database
+	if connectionString == "" {
+		connectionString = config.Database.Database
 	}
 }
 
 // ConnectDB Connects to sqlite3 database
 func ConnectDB() (*sqlx.DB, error) {
-	db, err := sqlx.Connect(dialect, database)
+	db, err := sqlx.Connect(dialect, connectionString)
 	if err != nil {
 		log.Fatalln(err)
 	}

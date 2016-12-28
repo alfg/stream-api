@@ -7,7 +7,7 @@
       "port": "",
       "user": "",
       "password": "",
-      "database": "test.db"
+      "database": "postgres://postgres:@postgres:5432/streamcat?sslmode=disable"
     },
     "streamThumbnailUrl": "http://live.streamcat.tv:8080/live/%s.png",
     "streamServerRtmpUrl": "rtmp://live.streamcat.tv:8080/stream",
