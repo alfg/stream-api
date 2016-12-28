@@ -8,4 +8,5 @@ type Index struct {
 	Homepage    string `json:"homepage,omitempty"`
 	Bugs        string `json:"bugs,omitempty"`
 	Docs        string `json:"docs,omitempty"`
+	Github      string `json:"github,omitempty"`
 }
