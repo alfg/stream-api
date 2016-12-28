@@ -8,7 +8,6 @@
 * go-validator - model/struct validations
 * jwt-go - JWT implementation library
 
-
 ### Go Setup (for local development)
 * [Install Go](https://golang.org/dl/)
 ```

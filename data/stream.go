@@ -115,13 +115,46 @@ func UpdateStreamByID(id int, stream models.StreamPrivate) *models.StreamPrivate
 	return &stream
 }
 
-// DeleteStreamByID Deletes stream by id
-func DeleteStreamByID(id int) error {
-	const query = "DELETE FROM stream WHERE id = :id"
+// UpdateStreamByName Update stream by name
+func UpdateStreamByName(name string, stream models.StreamPrivate) *models.StreamPrivate {
+	const query = `UPDATE stream
+		SET stream_name = :stream_name,
+		type = :type,
+		description = :description
+		stream_name = :stream_name
+		stream_key = :stream_key
+		private = :private
+		WHERE stream_name = :name`
 
 	db, _ := ConnectDB()
 	tx := db.MustBegin()
-	_, err := tx.Exec(query, 4)
+	_, err := tx.NamedExec(query, &stream)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tx.Commit()
+
+	return &stream
+}
+
+// DeleteStreamByID Deletes stream by id
+func DeleteStreamByID(id int) error {
+	const query = "DELETE FROM stream WHERE id = $1"
+
+	db, _ := ConnectDB()
+	tx := db.MustBegin()
+	_, err := tx.Exec(query, id)
+	tx.Commit()
+	return err
+}
+
+// DeleteStreamByName Deletes stream by name
+func DeleteStreamByName(name string) error {
+	const query = "DELETE FROM stream WHERE stream_name = $1"
+
+	db, _ := ConnectDB()
+	tx := db.MustBegin()
+	_, err := tx.Exec(query, name)
 	tx.Commit()
 	return err
 }

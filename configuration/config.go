@@ -66,5 +66,4 @@ func getConfigFromEnv(config *Configuration) {
 	if rtmpHost != "" {
 		config.RtmpHost = rtmpHost
 	}
-
 }

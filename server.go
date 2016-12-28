@@ -33,10 +33,8 @@ func startServer() {
 	registerRoutes(e)
 
 	// Start server
-	fmt.Printf("Starting server on port %s\n", config.Port)
-	// e.Run(standard.New(fmt.Sprintf("%s:%s", config.Host, config.Port)))
-	// e.Run(standard.New(":4000"))
-	e.Logger.Fatal(e.Start(":4000"))
+	port := fmt.Sprintf(":%s", config.Port)
+	e.Logger.Fatal(e.Start(port))
 }
 
 func main() {

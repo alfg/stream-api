@@ -1,4 +1,4 @@
-package controllers
+package handlers
 
 import (
 	"crypto/rand"
@@ -39,9 +39,6 @@ func GetStream(c echo.Context) error {
 // GetStreamByName Gets a stream by name.
 func GetStreamByName(c echo.Context) error {
 	name := c.Param("name")
-	// name := c.P(0)
-
-	fmt.Println(name)
 
 	stream, err := data.GetStreamByName(name)
 	if err != nil {
@@ -96,7 +93,6 @@ func GetFeaturedStreams(c echo.Context) error {
 		(*streams)[k].StreamRTMP = buildRTMPURL(v.StreamRTMP)
 	}
 
-	fmt.Println(streams)
 	return c.JSON(http.StatusOK, streams)
 }
 
@@ -147,9 +143,9 @@ func UpdateStream(c echo.Context) error {
 		return err
 	}
 
-	id, _ := strconv.Atoi(c.Param("id"))
+	name := c.Param("name")
 
-	stream, err := data.GetStreamByID(id)
+	stream, err := data.GetStreamByName(name)
 	if err != nil {
 		fmt.Println(err)
 		resp := models.DoesNotExist{
@@ -164,15 +160,15 @@ func UpdateStream(c echo.Context) error {
 	stream.Description = s.Description
 	stream.Private = s.Private
 
-	updatedStream := data.UpdateStreamByID(id, *stream)
+	updatedStream := data.UpdateStreamByName(name, *stream)
 	return c.JSON(http.StatusOK, updatedStream)
 }
 
 // DeleteStream deletes a stream
 func DeleteStream(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	name := c.Param("name")
 
-	err := data.DeleteStreamByID(id)
+	err := data.DeleteStreamByName(name)
 	if err != nil {
 		fmt.Println(err)
 		resp := models.DoesNotExist{

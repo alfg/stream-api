@@ -1,6 +1,7 @@
 package models
 
 // Stream contains stream models.
+// Only to be used on create stream.
 type Stream struct {
 	ID          int64  `db:"id" json:"id,omitempty"`
 	Title       string `db:"title" json:"title,omitempty" valid:"required"`
@@ -24,9 +25,9 @@ type StreamPrivate struct {
 	Private     bool   `db:"private" json:"private" valid:"-"`
 	StreamName  string `db:"stream_name" json:"stream_name" valid:"alphanum,required"`
 	StreamKey   string `db:"stream_key" json:"-" valid:"alphanum,required"` // StreamKey?
-	StreamURL   string `json:"stream_url"`
-	StreamRTMP  string `json:"stream_rtmp_url"`
-	VideoURL    string `json:"video_url"`
-	Live        bool   `json:"live"`
-	Thumbnail   string `json:"thumbnail"`
+	StreamURL   string `json:"stream_url,omitempty"`
+	StreamRTMP  string `json:"stream_rtmp_url,omitempty"`
+	VideoURL    string `json:"video_url,omitempty"`
+	Live        bool   `json:"live,omitempty"`
+	Thumbnail   string `json:"thumbnail,omitempty"`
 }
