@@ -22,7 +22,7 @@ func GetStreams() *[]models.StreamPrivate {
 func GetFeaturedStreams(limit int) (*[]models.StreamPrivate, error) {
 	const query = `
 		SELECT * FROM stream
-		WHERE private = 0
+		WHERE private = false
 		ORDER BY id DESC
 		LIMIT $1
 	`
