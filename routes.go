@@ -16,6 +16,7 @@ func registerRoutes(e *echo.Echo) {
 	e.GET("/", index)
 	e.GET("/stream/auth", h.AuthenticateStream) // RTMP auth check.
 	e.POST("/authorize", authorize)             // JWT login.
+	e.POST("/token", authorize)                 // JWT login.
 	e.POST("/register", h.RegisterClient)
 
 	// User routes
