@@ -33,7 +33,7 @@ var settings = Settings{}
 
 // Init configuration setup
 func init() {
-	file, err := ioutil.ReadFile("settings/defaults.json")
+	file, err := ioutil.ReadFile("defaults.json")
 	if err != nil {
 		fmt.Println("error reading settings file.")
 	}
