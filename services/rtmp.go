@@ -2,7 +2,7 @@ package services
 
 import (
 	"fmt"
-	"streamcat-api/configuration"
+	"streamcat-api/settings"
 )
 
 // RTMPStats model.
@@ -94,8 +94,7 @@ type StreamActive struct {
 // GetRTMPStats Gets rtmp stats.
 func (c *HTTPClient) GetRTMPStats() (*RTMPStats, error) {
 
-	config := configuration.ConfigurationSetup()
-	var url = config.RtmpHost + "/stat.xml"
+	var url = settings.Get().RtmpHost + "/stat.xml"
 
 	rsp := &RTMPStats{}
 	e := c.loadResponse(url, rsp, "xml")

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"streamcat-api/configuration"
+	"streamcat-api/settings"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -18,7 +18,6 @@ func configRuntime() {
 func startServer() {
 	// Echo instance
 	e := echo.New()
-	config := configuration.ConfigurationSetup()
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -34,7 +33,7 @@ func startServer() {
 	registerRoutes(e)
 
 	// Start server
-	port := fmt.Sprintf(":%s", config.Port)
+	port := fmt.Sprintf(":%s", settings.Get().Port)
 	e.Logger.Fatal(e.Start(port))
 }
 

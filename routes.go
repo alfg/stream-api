@@ -2,16 +2,15 @@ package main
 
 import (
 	"net/http"
-	"streamcat-api/configuration"
 	h "streamcat-api/handlers"
 	"streamcat-api/models"
+	"streamcat-api/settings"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
 func registerRoutes(e *echo.Echo) {
-	config := configuration.ConfigurationSetup()
 
 	e.GET("/", index)
 	e.GET("/stream/auth", h.AuthenticateStream) // RTMP auth check.
@@ -37,14 +36,14 @@ func registerRoutes(e *echo.Echo) {
 
 	// Requires client access.
 	v1Auth := e.Group("/v1")
-	v1Auth.Use(middleware.JWT([]byte(config.JWTKey)))
+	v1Auth.Use(middleware.JWT([]byte(settings.Get().JWTKey)))
 	v1Auth.POST("/streams", h.CreateStream)
 	v1Auth.PUT("/streams/:name", h.UpdateStream)
 	v1Auth.DELETE("/streams/:name", h.DeleteStream)
 
 	// Restricted group
 	r := e.Group("/me")
-	r.Use(middleware.JWT([]byte(config.JWTKey)))
+	r.Use(middleware.JWT([]byte(settings.Get().JWTKey)))
 	r.GET("", restricted)
 }
 

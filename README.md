@@ -49,10 +49,32 @@ gin -a 4000 -p 4001
 ```
 
 ### Database Setup
+
+#### SQLite
 * Create DB (sqlite3)
 ```
 sqlite3 test.db < scripts/schema.sql
 ```
+
+#### PostgreSQL
+```
+# Backup
+pg_dump -Fc -h db.streamcat.tv -U postgres -d streamcat > postgres-schema.bak
+pg_dump -Ft -h db.streamcat.tv -U postgres -d streamcat > postgres-schema.tar
+
+# Restore
+pg_restore -Fc -h db.streamcat.tv -U postgres -d streamcat postgres-schema.bak
+pg_restore -Ft -h db.streamcat.tv -U postgres -d streamcat postgres-schema.tar
+
+# Dump schema only
+pg_dump -s -h db.streamcat.tv -U postgres -d streamcat > postgres-schema.sql
+
+# Restore schema only
+pg_restore -s -h db.streamcat.tv -U postgres -d streamcat postgres-schema.sql
+```
+
+
+http://postgresguide.com/utilities/backup-restore.html
 
 
 ### Docker Setup
