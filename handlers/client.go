@@ -32,13 +32,23 @@ import (
 // RegisterClient Creates a client
 func RegisterClient(c echo.Context) error {
 
-	key := generateKey(10)
-	secret := generateKey(20)
-
-	cl := models.Client{
-		APIKey:    key,
-		APISecret: secret,
+	// Bind model to json request body.
+	cl := new(models.Client)
+	if err := c.Bind(cl); err != nil {
+		return err
 	}
+
+	// Check if email exists.
+	if data.ClientExistsByEmail(cl.Email) {
+		resp := models.AlreadyExists{
+			Code:    409,
+			Message: "Client email is taken.",
+		}
+		return c.JSON(http.StatusConflict, resp)
+	}
+
+	cl.APIKey = generateKey(10)
+	cl.APISecret = generateKey(20)
 
 	// Create record
 	client, err := data.CreateClient(cl)

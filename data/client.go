@@ -39,8 +39,8 @@ func GetClientByKey(key string) (*models.Client, error) {
 }
 
 // CreateClient creates a client.
-func CreateClient(client models.Client) (*models.Client, error) {
-	const query = "INSERT INTO client (api_key, api_secret) VALUES (:api_key, :api_secret)"
+func CreateClient(client *models.Client) (*models.Client, error) {
+	const query = "INSERT INTO client (api_key, api_secret, email, domain) VALUES (:api_key, :api_secret, :email, :domain)"
 
 	// Create bcrypt hashed password.
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(client.APISecret), bcrypt.DefaultCost)
@@ -55,7 +55,7 @@ func CreateClient(client models.Client) (*models.Client, error) {
 	result, err := tx.NamedExec(query, &client)
 	if err != nil {
 		fmt.Println("Error", err)
-		return &client, err
+		return client, err
 	}
 	tx.Commit()
 
@@ -64,5 +64,18 @@ func CreateClient(client models.Client) (*models.Client, error) {
 	lastID, _ := result.LastInsertId()
 	client.ID = lastID
 
-	return &client, nil
+	return client, nil
+}
+
+// ClientExistsByEmail Checks if email exists.
+func ClientExistsByEmail(email string) bool {
+	const query = `SELECT EXISTS (SELECT id FROM client WHERE email = $1)`
+
+	var exists bool
+	db, _ := ConnectDB()
+	err := db.QueryRow(query, email).Scan(&exists)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return exists
 }

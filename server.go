@@ -24,6 +24,7 @@ func startServer() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.Gzip())
+	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAcceptEncoding},
