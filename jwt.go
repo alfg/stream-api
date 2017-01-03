@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/http"
-	"streamcat-api/configuration"
 	"streamcat-api/data"
+	"streamcat-api/settings"
 	"strings"
 	"time"
 
@@ -14,7 +14,6 @@ import (
 )
 
 func authorize(c echo.Context) error {
-	config := configuration.ConfigurationSetup()
 	authorizationHeader := c.Request().Header.Get("Authorization")
 
 	if !strings.HasPrefix(authorizationHeader, "Basic") {
@@ -49,7 +48,7 @@ func authorize(c echo.Context) error {
 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 		// Generate encoded token and send it as response.
-		t, err := token.SignedString([]byte(config.JWTKey))
+		t, err := token.SignedString([]byte(settings.Get().JWTKey))
 		if err != nil {
 			return err
 		}
@@ -83,7 +82,7 @@ func authorize(c echo.Context) error {
 // 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 //
 // 		// Generate encoded token and send it as response.
-// 		t, err := token.SignedString([]byte(config.JWTKey))
+// 		t, err := token.SignedString([]byte(settings.Get().JWTKey))
 // 		if err != nil {
 // 			return err
 // 		}

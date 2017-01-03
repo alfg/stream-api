@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"streamcat-api/configuration"
+	"streamcat-api/settings"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq" // Postgres driver.
@@ -16,9 +16,8 @@ const dialect = "postgres"
 var connectionString = os.Getenv("DATABASE")
 
 func init() {
-	config := configuration.ConfigurationSetup()
 	if connectionString == "" {
-		connectionString = config.Database.Database
+		connectionString = settings.Get().Database.Database
 	}
 }
 

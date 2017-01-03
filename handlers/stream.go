@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"streamcat-api/configuration"
 	"streamcat-api/data"
 	"streamcat-api/models"
 	"streamcat-api/services"
+	"streamcat-api/settings"
 
 	valid "github.com/asaskevich/govalidator"
 	"github.com/labstack/echo"
@@ -225,28 +225,24 @@ func generateKey(n int) string {
 
 func buildStreamURL(name string) string {
 
-	config := configuration.ConfigurationSetup()
-	url := fmt.Sprintf(config.StreamServerLiveURL, name)
+	url := fmt.Sprintf(settings.Get().StreamServerLiveURL, name)
 	return string(url)
 }
 
 func buildVideoURL(name string) string {
 
-	config := configuration.ConfigurationSetup()
-	url := fmt.Sprintf(config.StreamVideoURL, name)
+	url := fmt.Sprintf(settings.Get().StreamVideoURL, name)
 	return string(url)
 }
 
 func buildThumbnailURL(name string) string {
 
-	config := configuration.ConfigurationSetup()
-	url := fmt.Sprintf(config.StreamThumbnailURL, name)
+	url := fmt.Sprintf(settings.Get().StreamThumbnailURL, name)
 	return string(url)
 }
 
 func buildRTMPURL(name string) string {
 
-	config := configuration.ConfigurationSetup()
-	url := fmt.Sprintf(config.StreamServerRTMPURL)
+	url := fmt.Sprintf(settings.Get().StreamServerRTMPURL)
 	return string(url)
 }
