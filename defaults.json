@@ -9,9 +9,9 @@
       "password": "",
       "database": "postgres://postgres:@db.streamcat.tv:5432/streamcat?sslmode=disable"
     },
-    "streamThumbnailUrl": "http://live.streamcat.tv:8080/live/%s.png",
-    "streamServerRtmpUrl": "rtmp://live.streamcat.tv:8080/stream",
+    "streamThumbnailUrl": "http://live.streamcat.tv/live/%s.png",
+    "streamServerRtmpUrl": "rtmp://live.streamcat.tv/stream",
     "streamServerLiveUrl": "http://streamcat.tv/%s",
-    "streamVideoUrl": "http://live.streamcat.tv:8080/live/%s.m3u8",
-    "rtmpHost": "http://live.streamcat.tv:8080"
+    "streamVideoUrl": "http://live.streamcat.tv/live/%s.m3u8",
+    "rtmpHost": "http://live.streamcat.tv"
 }

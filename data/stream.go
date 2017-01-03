@@ -72,6 +72,7 @@ func GetStreamByName(name string) (*models.StreamPrivate, error) {
 }
 
 // CreateStream creates a stream.
+// TODO: Check for proper claims from JWT.
 func CreateStream(stream *models.Stream) *models.Stream {
 	const query = `INSERT INTO stream
 		(title, type, description, private, stream_name, stream_key)

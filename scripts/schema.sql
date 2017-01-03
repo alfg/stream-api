@@ -5,6 +5,14 @@ CREATE TABLE `user` (
 	`email` TEXT UNIQUE
 );
 
+CREATE TABLE `client` (
+	`id` INTEGER PRIMARY KEY AUTOINCREMENT,
+	`api_key` TEXT,
+	`api_secret` TEXT,
+	`email` TEXT UNIQUE
+	`domain` TEXT UNIQUE
+);
+
 CREATE TABLE `stream` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`title` TEXT,

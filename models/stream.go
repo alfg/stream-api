@@ -28,6 +28,6 @@ type StreamPrivate struct {
 	StreamURL   string `json:"stream_url,omitempty"`
 	StreamRTMP  string `json:"stream_rtmp_url,omitempty"`
 	VideoURL    string `json:"video_url,omitempty"`
-	Live        bool   `json:"live,omitempty"`
+	Live        bool   `json:"live"`
 	Thumbnail   string `json:"thumbnail,omitempty"`
 }
